@@ -14,16 +14,16 @@
     </Card>
   </div>
   <div class="container">
-    <Card className="channel-item" v-for="(item, index) in parsedData?.items" :key="index">
+    <Card className="channel-item" v-for="item in parsedData?.items" :key="item.id">
       <div class="row no-gutters">
         <div class="col-3">
-          <CardLink :target="`/${index}`">
+          <CardLink :target="`/${item.id}`">
             <CardImage :src="item?.itunes.image" />
           </CardLink>
         </div>
         <div class="col-9">
           <CardBody>
-            <CardLink :target="`/${index}`">
+            <CardLink :target="`/${item.id}`">
               <CardTitle className="channel-item__title" :title="item?.title" />
             </CardLink>
             <CardDate :date="item?.pubDate" />
@@ -67,7 +67,15 @@ export default {
     const parser = new Parser();
     parser.parseURL(CHANNEL_SOURCE, (err, data) => {
       if (err) console.error(`parse rss source error with link ${CHANNEL_SOURCE}`);
-      this.parsedData = data;
+      let length = data.items.length;
+      this.parsedData = {
+        ...data,
+        items: data.items.map(item => {
+          const itemWithId = { ...item, id: length };
+          length -= 1;
+          return itemWithId;
+        }),
+      };
       console.log(this.parsedData);
     });
   },
