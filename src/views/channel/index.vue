@@ -18,7 +18,7 @@
       <div class="row no-gutters">
         <div class="col-3">
           <CardLink :target="`/${item.id}`">
-            <CardImage :src="item?.itunes.image" />
+            <CardImage :src="item?.itunes.image" :alt="item?.title" />
           </CardLink>
         </div>
         <div class="col-9">
@@ -36,8 +36,6 @@
 </template>
 
 <script>
-import Parser from 'rss-parser';
-
 import Card from '@/components/Card/index.vue';
 import CardImage from '@/components/Card/Image';
 import CardBody from '@/components/Card/Body';
@@ -45,7 +43,7 @@ import CardTitle from '@/components/Card/Title';
 import CardDate from '@/components/Card/Date';
 import CardLink from '@/components/Card/Link';
 import CardDescription from '@/components/Card/Description';
-import { CHANNEL_SOURCE } from '@/constants/channel';
+import { getAllChannelList } from '@/api/channel';
 
 export default {
   name: 'Channel',
@@ -63,21 +61,9 @@ export default {
       parsedData: null,
     };
   },
-  mounted() {
-    const parser = new Parser();
-    parser.parseURL(CHANNEL_SOURCE, (err, data) => {
-      if (err) console.error(`parse rss source error with link ${CHANNEL_SOURCE}`);
-      let length = data.items.length;
-      this.parsedData = {
-        ...data,
-        items: data.items.map(item => {
-          const itemWithId = { ...item, id: length };
-          length -= 1;
-          return itemWithId;
-        }),
-      };
-      console.log(this.parsedData);
-    });
+  async mounted() {
+    const list = await getAllChannelList();
+    this.parsedData = list;
   },
 };
 </script>
