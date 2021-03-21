@@ -89,6 +89,10 @@ export default {
   &-item {
     &__title {
       @include multiLineEllipsis();
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
     &__description {
