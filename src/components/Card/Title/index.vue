@@ -27,6 +27,10 @@ export default {
 
 <style lang="scss" scoped>
 .card__title {
-  margin-bottom: 8px;
+  color: #181818;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 </style>

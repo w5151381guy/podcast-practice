@@ -1,5 +1,5 @@
 <template>
-  <a :href="target" rel="noopener noreferrer nofollow" :class="computedClassName">{{ text }}</a>
+  <a :href="target" rel="noopener noreferrer nofollow" :class="computedClassName"><slot /></a>
 </template>
 
 <script>
@@ -10,11 +10,6 @@ export default {
   props: {
     target: {
       default: '#',
-      type: String,
-      required: true,
-    },
-    text: {
-      default: '',
       type: String,
       required: true,
     },
@@ -33,5 +28,9 @@ export default {
 <style lang="scss" scoped>
 .card__link {
   margin-bottom: 8px;
+
+  &:hover {
+    text-decoration: none;
+  }
 }
 </style>
