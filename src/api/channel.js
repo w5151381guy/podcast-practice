@@ -14,16 +14,5 @@ export const getAllChannelList = async () => {
       return itemWithId;
     }),
   };
-  sessionStorage.setItem('channel', JSON.stringify(dataMappedWithId));
   return dataMappedWithId;
-};
-
-export const getChannelListItemDetail = async id => {
-  let data = JSON.parse(sessionStorage.getItem('channel'));
-  if (data) {
-    return data.items.find(item => item.id === id);
-  } else {
-    data = await getAllChannelList();
-    return data.items.find(item => item.id === id);
-  }
 };
