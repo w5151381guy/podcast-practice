@@ -1,5 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 import Channel from '../views/channel';
+
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -8,14 +11,14 @@ const routes = [
     component: Channel,
   },
   {
-    path: '/:id',
+    path: '/:id?',
     name: 'ChannelDetail',
-    component: () => import('../views/channel/detail'),
+    component: () => import('../views/channel/detail.vue'),
   },
 ];
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+const router = new VueRouter({
+  mode: 'history',
   routes,
 });
 

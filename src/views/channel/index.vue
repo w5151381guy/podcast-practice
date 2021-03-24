@@ -1,37 +1,39 @@
 <template>
-  <div class="container">
-    <Card className="channel">
-      <div class="row no-gutters">
-        <div class="col-4">
-          <CardImage :src="parsedData?.image.url" :alt="parsedData?.image.title" />
+  <div class="channel">
+    <div class="container">
+      <Card>
+        <div class="row no-gutters">
+          <div class="col-4">
+            <CardImage :src="parsedData.image.url" :alt="parsedData.image.title" />
+          </div>
+          <div class="col-8">
+            <CardBody>
+              <CardTitle className="channel__title" :title="parsedData.title" />
+            </CardBody>
+          </div>
         </div>
-        <div class="col-8">
-          <CardBody>
-            <CardTitle className="channel__title" :title="parsedData?.title" />
-          </CardBody>
-        </div>
-      </div>
-    </Card>
-  </div>
-  <div class="container">
-    <Card className="channel-item" v-for="item in parsedData?.items" :key="item.id">
-      <div class="row no-gutters">
-        <div class="col-3">
-          <CardLink :target="`/${item.id}`">
-            <CardImage :src="item?.itunes.image" :alt="item?.title" />
-          </CardLink>
-        </div>
-        <div class="col-9">
-          <CardBody>
+      </Card>
+    </div>
+    <div class="container">
+      <Card className="channel-item" v-for="item in parsedData.items" :key="item.id">
+        <div class="row no-gutters">
+          <div class="col-3">
             <CardLink :target="`/${item.id}`">
-              <CardTitle className="channel-item__title" :title="item?.title" />
+              <CardImage :src="item.itunes.image" :alt="item.title" />
             </CardLink>
-            <CardDate :date="item?.pubDate" />
-            <CardDescription className="channel-item__description" :content="item?.contentSnippet" />
-          </CardBody>
+          </div>
+          <div class="col-9">
+            <CardBody>
+              <CardLink :target="`/${item.id}`">
+                <CardTitle className="channel-item__title" :title="item.title" />
+              </CardLink>
+              <CardDate :date="item.pubDate" />
+              <CardDescription className="channel-item__description" :content="item.contentSnippet" />
+            </CardBody>
+          </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+    </div>
   </div>
 </template>
 

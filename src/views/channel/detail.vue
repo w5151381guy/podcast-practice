@@ -4,16 +4,16 @@
       <Card>
         <div class="row no-gutters">
           <div class="col-4">
-            <CardImage :src="item?.itunes.image" :alt="item?.title" />
+            <CardImage :src="item.itunes.image" :alt="item.title" />
           </div>
           <div class="col-6">
             <CardBody>
-              <CardTitle className="channel__title" :title="item?.title" />
+              <CardTitle className="channel__title" :title="item.title" />
             </CardBody>
           </div>
           <div class="col-2">
             <div class="channel__play">
-              <button>播放此期數</button>
+              <button @click="showAudio">播放此期數</button>
             </div>
           </div>
         </div>
@@ -21,12 +21,24 @@
     </div>
     <div class="container">
       <h2>內容描述</h2>
-      <p class="channel__description">{{ item?.content }}</p>
+      <p class="channel__description">{{ item.content }}</p>
+    </div>
+    <div class="container">
+      <audio-player
+        ref="audioPlayer"
+        :class="isAudioPlayerShow ? 'd-block' : 'd-none'"
+        :before-play="handleBeforePlay"
+        :audio-list="audioList"
+        theme-color="#ff2929"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import AudioPlayer from '@liripeng/vue-audio-player';
+import '@liripeng/vue-audio-player/lib/vue-audio-player.css';
+
 import Card from '@/components/Card/index.vue';
 import CardImage from '@/components/Card/Image';
 import CardBody from '@/components/Card/Body';
@@ -36,6 +48,7 @@ import { getAllChannelList } from '@/api/channel';
 export default {
   name: 'ChannelDetail',
   components: {
+    AudioPlayer,
     Card,
     CardImage,
     CardBody,
@@ -43,8 +56,10 @@ export default {
   },
   data() {
     return {
-      item: null,
+      isAudioPlayerShow: false,
       currentPlayIndex: 0,
+      item: null,
+      audioList: [],
     };
   },
   async mounted() {
@@ -52,6 +67,20 @@ export default {
     const data = await getAllChannelList();
     this.currentPlayIndex = data.items.findIndex(item => item.id === itemId);
     this.item = data.items[this.currentPlayIndex];
+    this.audioList = data.items.map(item => item.enclosure.url);
+  },
+  methods: {
+    handleBeforePlay(next) {
+      if (this.$refs.audioPlayer.currentPlayIndex !== this.currentPlayIndex) {
+        this.$refs.audioPlayer.currentPlayIndex = this.currentPlayIndex;
+      }
+
+      next();
+    },
+    showAudio() {
+      this.$refs.audioPlayer.play();
+      this.isAudioPlayerShow = true;
+    },
   },
 };
 </script>

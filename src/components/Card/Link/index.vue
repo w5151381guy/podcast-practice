@@ -9,7 +9,6 @@ export default {
   name: 'CardLink',
   props: {
     target: {
-      default: '#',
       type: String,
       required: true,
     },
