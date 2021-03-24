@@ -24,13 +24,7 @@
       <p class="channel__description">{{ item.content }}</p>
     </div>
     <div class="container">
-      <audio-player
-        ref="audioPlayer"
-        :class="isAudioPlayerShow ? 'd-block' : 'd-none'"
-        :before-play="handleBeforePlay"
-        :audio-list="audioList"
-        theme-color="#ff2929"
-      />
+      <audio-player ref="audioPlayer" :class="isAudioPlayerShow ? 'd-block' : 'd-none'" :audio-list="audioList" theme-color="#ff2929" />
     </div>
   </div>
 </template>
@@ -69,14 +63,12 @@ export default {
     this.item = data.items[this.currentPlayIndex];
     this.audioList = data.items.map(item => item.enclosure.url);
   },
+  updated() {
+    if (this.$refs.audioPlayer.currentPlayIndex !== this.currentPlayIndex) {
+      this.$refs.audioPlayer.currentPlayIndex = this.currentPlayIndex;
+    }
+  },
   methods: {
-    handleBeforePlay(next) {
-      if (this.$refs.audioPlayer.currentPlayIndex !== this.currentPlayIndex) {
-        this.$refs.audioPlayer.currentPlayIndex = this.currentPlayIndex;
-      }
-
-      next();
-    },
     showAudio() {
       this.$refs.audioPlayer.play();
       this.isAudioPlayerShow = true;
