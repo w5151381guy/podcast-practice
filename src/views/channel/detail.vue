@@ -24,7 +24,13 @@
       <p class="channel__description">{{ item.content }}</p>
     </div>
     <div class="container">
-      <audio-player ref="audioPlayer" :class="isAudioPlayerShow ? 'd-block' : 'd-none'" :audio-list="audioList" theme-color="#ff2929" />
+      <audio-player
+        ref="audioPlayer"
+        :class="isAudioPlayerShow ? 'd-block' : 'd-none'"
+        :audio-list="audioList"
+        :before-next="handleBeforeNext"
+        theme-color="#ff2929"
+      />
     </div>
   </div>
 </template>
@@ -60,9 +66,10 @@ export default {
   async mounted() {
     const itemId = Number(this.$route.params.id);
     const data = await getAllChannelList();
-    this.currentPlayIndex = data.items.findIndex(item => item.id === itemId);
-    this.item = data.items[this.currentPlayIndex];
-    this.audioList = data.items.map(item => item.enclosure.url);
+    const items = data.items.sort((a, b) => a.id - b.id);
+    this.currentPlayIndex = items.findIndex(item => item.id === itemId);
+    this.item = items[this.currentPlayIndex];
+    this.audioList = items.map(item => item.enclosure.url);
   },
   updated() {
     if (this.$refs.audioPlayer.currentPlayIndex !== this.currentPlayIndex) {
@@ -70,6 +77,13 @@ export default {
     }
   },
   methods: {
+    handleBeforeNext(next) {
+      if (this.$refs.audioPlayer.currentPlayIndex === this.audioList.length - 1) {
+        this.$refs.audioPlayer.pause();
+      } else {
+        next();
+      }
+    },
     showAudio() {
       this.$refs.audioPlayer.play();
       this.isAudioPlayerShow = true;
