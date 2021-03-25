@@ -38,6 +38,7 @@ import CardImage from '@/components/Card/Image';
 import CardBody from '@/components/Card/Body';
 import CardTitle from '@/components/Card/Title';
 import { getAllChannelList } from '@/api/channel';
+import { channelItem } from '@/models/channel';
 
 export default {
   name: 'ChannelDetail',
@@ -52,7 +53,7 @@ export default {
     return {
       isAudioPlayerShow: false,
       currentPlayIndex: 0,
-      item: null,
+      item: new channelItem(),
       audioList: [],
     };
   },

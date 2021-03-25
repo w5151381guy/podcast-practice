@@ -46,6 +46,7 @@ import CardDate from '@/components/Card/Date';
 import CardLink from '@/components/Card/Link';
 import CardDescription from '@/components/Card/Description';
 import { getAllChannelList } from '@/api/channel';
+import { channel } from '@/models/channel';
 
 export default {
   name: 'Channel',
@@ -60,7 +61,7 @@ export default {
   },
   data() {
     return {
-      parsedData: null,
+      parsedData: new channel(),
     };
   },
   async mounted() {
