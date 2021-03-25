@@ -23,7 +23,7 @@ export class ChannelAudio {
 
 export class ChannelImage {
   constructor(props) {
-    const { link = null, title = '', url = null } = props || {};
+    const { link = '', title = '', url = '' } = props || {};
 
     Object.assign(this, {
       link,
@@ -45,7 +45,7 @@ export class ChannelItem {
       itunes = null,
       link = null,
       pubDate = null,
-      title = null,
+      title = '',
     } = props || {};
 
     Object.assign(this, {
