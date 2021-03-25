@@ -1,4 +1,4 @@
-export class channelOwner {
+export class ChannelOwner {
   constructor(props) {
     const { email = null, name = null } = props || {};
 
@@ -9,7 +9,7 @@ export class channelOwner {
   }
 }
 
-export class channelAudio {
+export class ChannelAudio {
   constructor(props) {
     const { length = null, type = null, url = null } = props || {};
 
@@ -21,7 +21,7 @@ export class channelAudio {
   }
 }
 
-export class channelImage {
+export class ChannelImage {
   constructor(props) {
     const { link = null, title = '', url = null } = props || {};
 
@@ -33,7 +33,7 @@ export class channelImage {
   }
 }
 
-export class channelItem {
+export class ChannelItem {
   constructor(props) {
     const {
       content = null,
@@ -51,11 +51,11 @@ export class channelItem {
     Object.assign(this, {
       content,
       contentSnippet,
-      enclosure: new channelAudio(enclosure),
+      enclosure: new ChannelAudio(enclosure),
       guid,
       id,
       isoDate,
-      itunes: new channelItunes(itunes),
+      itunes: new ChannelItunes(itunes),
       link,
       pubDate,
       title,
@@ -63,7 +63,7 @@ export class channelItem {
   }
 }
 
-export class channelItunes {
+export class ChannelItunes {
   constructor(props) {
     const {
       author = null,
@@ -85,13 +85,13 @@ export class channelItunes {
       categoriesWithSubs,
       explicit,
       image,
-      owner: new channelOwner(owner),
+      owner: new ChannelOwner(owner),
       subtitle,
     });
   }
 }
 
-export class channel {
+export class Channel {
   constructor(props) {
     const {
       copyright = null,
@@ -114,9 +114,9 @@ export class channel {
       copyright,
       description,
       feedUrl,
-      image: new channelImage(image),
-      items: items.map(item => new channelItem(item)),
-      itunes: new channelItunes(itunes),
+      image: new ChannelImage(image),
+      items: items.map(item => new ChannelItem(item)),
+      itunes: new ChannelItunes(itunes),
       language,
       lastBuildDate,
       link,
