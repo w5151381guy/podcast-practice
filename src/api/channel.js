@@ -14,6 +14,5 @@ export const getAllChannelList = async () => {
       return itemWithId;
     }),
   };
-  sessionStorage.setItem('channel', JSON.stringify(dataMappedWithId));
   return dataMappedWithId;
 };
